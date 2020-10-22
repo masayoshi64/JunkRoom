@@ -19,7 +19,7 @@ $$
 
 ## 1.4 状態の実現
 
-任意の混合状態は複合系の純粋状態から実現できる。系$A$の混合状態$\{p_i:\ket\psi_i\}_{i = 1}^n$に対してn次元の補助系$B$を用意し、その基底を$\{\ket e^{(b)}_i\}_{i = 1}^n$とする。複合系$A\otimes B$において純粋状態$\sum_i\sqrt{p_i} \ket\psi\ket e_i^{(b)}$を考えることができる（ちゃんと単位ベクトルになっている！）のでこの部分トレースをとることで,
+任意の混合状態は複合系の純粋状態から実現できる。系$A$の混合状態 $\{p_i:\ket\psi_i\}_{i = 1}^n$ に対してn次元の補助系$B$を用意し、その基底を $\{\ket e^{(b)}_i\}_{i = 1}^n$ とする。複合系$A\otimes B$において純粋状態 $\sum_i\sqrt{p_i} \ket\psi\ket e_i^{(b)}$ を考えることができる（ちゃんと単位ベクトルになっている！）のでこの部分トレースをとることで,
 $$
 \mathrm{Tr}_B \left[\left(\sum_i\sqrt{p_i} \ket\psi\ket e_i^{(b)}\right)\left(\sum_i\sqrt{p_i} \bra e_i^{(b)}\bra\psi\right)\right]  = \sum_j \bra e_j^{(b)}\left(\sum_i\sqrt{p_i} \ket\psi\ket e_i^{(b)}\right)\left(\sum_i\sqrt{p_i} \bra e_i^{(b)}\bra\psi\right)\ket e_j^{(b)}\\
 = \sum_i p_i\ket\psi\bra\psi
