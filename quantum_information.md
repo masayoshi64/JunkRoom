@@ -19,18 +19,12 @@ $$
 
 ## 1.4 状態の実現
 
-任意の混合状態は複合系の純粋状態から実現できる。
-
-系$A$の混合状態$\{p_i|\ket\psi_i\}_{i = 1}^n$に対してn次元の補助系$B$を用意し、その基底を$\{\ket e^{(b)}_i\}_{i = 1}^n$とする.
-
-複合系$A\otimes B$において純粋状態$\sum_i\sqrt{p_i} \ket\psi\ket e_i^{(b)}$を考えることができる（ちゃんと単位ベクトルになっている！）のでこの部分トレースをとることで,
+任意の混合状態は複合系の純粋状態から実現できる。系$A$の混合状態$\{p_i:\ket\psi_i\}_{i = 1}^n$に対してn次元の補助系$B$を用意し、その基底を$\{\ket e^{(b)}_i\}_{i = 1}^n$とする。複合系$A\otimes B$において純粋状態$\sum_i\sqrt{p_i} \ket\psi\ket e_i^{(b)}$を考えることができる（ちゃんと単位ベクトルになっている！）のでこの部分トレースをとることで,
 $$
 \mathrm{Tr}_B \left[\left(\sum_i\sqrt{p_i} \ket\psi\ket e_i^{(b)}\right)\left(\sum_i\sqrt{p_i} \bra e_i^{(b)}\bra\psi\right)\right]  = \sum_j \bra e_j^{(b)}\left(\sum_i\sqrt{p_i} \ket\psi\ket e_i^{(b)}\right)\left(\sum_i\sqrt{p_i} \bra e_i^{(b)}\bra\psi\right)\ket e_j^{(b)}\\
 = \sum_i p_i\ket\psi\bra\psi
 $$
-という混合状態を得ることができる（シュミット分解）。
-
-物理的には複合系$A\otimes B$において、$B$に関して$\{\ket e^{(b)}_i\}_{i = 1}^n$に対する射影測定を行いその情報を系$A$には伝えないことに相当する。
+という混合状態を得ることができる（シュミット分解）。物理的には複合系$A\otimes B$において、$B$に関して$\{\ket e^{(b)}_i\}_{i = 1}^n$に対する射影測定を行いその情報を系$A$には伝えないことに相当する。
 
 # 2. 一般の測定
 
@@ -43,7 +37,7 @@ $$
 $$
 A = \sum_{a} a P_a
 $$
-このとき, 観測値は以下のような分布に従う。
+このとき、観測値は以下のような分布に従う。
 $$
 Prob(A = a) = \bra\psi P_a\ket\psi
 $$
@@ -64,17 +58,13 @@ $$
 
 ## 2.4 POVMの実現
 
-系$A$の状態$\ket\psi, \rho_A$に対するPOVMを実現するために、補助系$B$を用意する。
+系$A$の状態$\ket\psi, \rho_A$に対するPOVMを実現するために、補助系$B$を用意する。$B$の初期状態を純粋状態$\ket0, \sigma$としておく（何でもいい）。
 
-$B$の初期状態を純粋状態$\ket0, \sigma$としておく（何でもいい）。
-
-全系の初期状態は$\rho\otimes\sigma$である。これをユニタリ変換$U$によって時間発展させた状態$U\ket\psi\ket0$を$B$の基底$\{\ket j\}_j$で分解すると以下のようになる。
+今、全系の初期状態は$\rho\otimes\sigma$である。これをユニタリ変換$U$によって時間発展させた状態$U\ket\psi\ket0$を$B$の基底$\{\ket j\}_j$で分解すると以下のようになる。
 $$
 U\ket\psi\otimes\ket0 = \sum_j (K_j\ket\psi)\otimes\ket j
 $$
-ただし$M$はKraus演算子と呼ばれる演算子である。 $\ket\psi\to M_j\ket\psi$という変換は線形なので$M_j$は線形演算子である。また、
-
-$B$で射影測定を行うと、その観測確率は
+ただし$M$はKraus演算子と呼ばれる演算子である。 $\ket\psi\to M_j\ket\psi$という変換は線形なので$M_j$は線形演算子である。また、$B$で射影測定を行うと、その観測確率は
 $$
 \mathrm{Prob}(M = j) = \bra\psi K_j^\dagger K_j\ket\psi\\
  = \mathrm{Tr}K_j^\dagger K_j\rho
