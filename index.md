@@ -1,8 +1,4 @@
-# テストだよ
-$x = f(y)$
+# いろいろ
 
-$$
-p = \log(e^p)
-$$
+[量子情報](quantum_information)
 
-見えてるかな？
