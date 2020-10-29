@@ -1,0 +1,145 @@
+<html>
+
+<head>
+
+    <style>
+        #table {
+
+            margin: 0 auto;
+            border-collapse: collapse;
+            border: 3px solid #ccc;
+
+        }
+
+        #table td {
+
+            border: 1px solid #ccc;
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 75px;
+            cursor: pointer;
+
+        }
+
+        .cell {
+            width: 30px;
+            height: 30px;
+        }
+
+        #app{
+            margin: 10px auto;
+            /* border: 1px solid #d1d1d1; */
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <table id="table">
+            <tr v-for="(row, rowId) in states">
+                <td v-for="(state, colId) in row" @click="onSelect(rowId, colId)">
+                    <div class="cell" style="background:#f00;" v-if="state==1"></div>
+                    <div class="cell" style="background:#00f;" v-if="state==-1"></div>
+                </td>
+            </tr>
+        </table>
+        <div>Energy: {{energy}}</div>
+        <button @click="update()">start</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                size: 10,
+                states: [],
+                weight: [],
+                pattern: [
+                    [
+                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        [1, 1, 1, -1, -1, -1, 1, 1, 1, 1],
+                        [1, 1, 1, -1, 1, 1, -1, 1, 1, 1],
+                        [1, 1, 1, -1, 1, 1, 1, -1, 1, 1],
+                        [1, 1, 1, -1, 1, 1, 1, -1, 1, 1],
+                        [1, 1, 1, -1, 1, 1, 1, -1, 1, 1],
+                        [1, 1, 1, -1, 1, 1, 1, -1, 1, 1],
+                        [1, 1, 1, -1, 1, 1, -1, 1, 1, 1],
+                        [1, 1, 1, -1, -1, -1, 1, 1, 1, 1],
+                        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+                    ],
+                ],
+                loop: true,
+                energy: 10,
+            },
+            mounted: function(){
+                this.init();
+            },
+            methods:{
+                onSelect: function(rowId, colId){
+                    this.$set(this.states[rowId], colId, this.states[rowId][colId]*-1);
+                },
+                init: function (rowId, colId) {
+                    // init state
+                    for (let i = 0; i < this.size; i++) {
+                        this.states.push([])
+                        for (let j = 0; j < this.size; j++) {
+                            this.states[i].push(1);
+                        }
+                    }
+                    // init weight
+                    for (let i = 0; i < this.size; i++) {
+                        this.weight.push([]);
+                        for (let j = 0; j < this.size; j++) {
+                            this.weight[i].push([]);
+                            for (let k = 0; k < this.size; k++) {
+                                this.weight[i][j].push([]);
+                                for (let l = 0;  l < this.size; l++) {
+                                    if (i == k && j == l) {
+                                        this.weight[i][j][k].push(0);
+                                        continue;
+                                    }
+                                    var w = 0;
+                                    for (let pi = 0; pi < this.pattern.length; pi++) {
+                                        const p = this.pattern[pi];
+                                        w+=p[i][j]*p[k][l];
+                                    }
+                                    this.weight[i][j][k].push(w);
+                                }
+                            }
+                        }          
+                    }
+                },
+                update: function(){
+                    var id = setInterval(this.mcmc, 100);
+                },
+                mcmc: function(){
+                        var i = this.randint(0, this.size);
+                        var j = this.randint(0, this.size);
+                        var u = 0;
+                        for (let k = 0; k < this.size; k++) {
+                            for (let l = 0; l < this.size; l++) {
+                                u += this.weight[i][j][k][l] * (this.states[k][l] + 1) / 2;
+                            }
+                        }
+                        if (u >= 0) this.$set(this.states[i], j, 1);
+                        else this.$set(this.states[i], j, -1);
+                        console.log(i, j, u);
+                        if (!this.loop) clearInterval(id);
+                },
+                randint: function(l, r){
+                    return Math.floor(Math.random() * (r-l)) + l;
+                }
+            }
+        })
+
+    </script>
+</body>
+
+
+</html>
