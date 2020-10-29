@@ -28,12 +28,11 @@
             height: 30px;
         }
 
-        #app{
+        #app {
             margin: 10px auto;
             /* border: 1px solid #d1d1d1; */
             text-align: center;
         }
-
     </style>
 
 </head>
@@ -77,12 +76,13 @@
                 loop: true,
                 energy: 10,
             },
-            mounted: function(){
+            mounted: function () {
                 this.init();
             },
-            methods:{
-                onSelect: function(rowId, colId){
-                    this.$set(this.states[rowId], colId, this.states[rowId][colId]*-1);
+            methods: {
+                onSelect: function (rowId, colId) {
+                    this.$set(this.states[rowId], colId, this.states[rowId][colId] * -1);
+                    this.calc_energy();
                 },
                 init: function (rowId, colId) {
                     // init state
@@ -99,7 +99,7 @@
                             this.weight[i].push([]);
                             for (let k = 0; k < this.size; k++) {
                                 this.weight[i][j].push([]);
-                                for (let l = 0;  l < this.size; l++) {
+                                for (let l = 0; l < this.size; l++) {
                                     if (i == k && j == l) {
                                         this.weight[i][j][k].push(0);
                                         continue;
@@ -107,33 +107,47 @@
                                     var w = 0;
                                     for (let pi = 0; pi < this.pattern.length; pi++) {
                                         const p = this.pattern[pi];
-                                        w+=p[i][j]*p[k][l];
+                                        w += p[i][j] * p[k][l];
                                     }
                                     this.weight[i][j][k].push(w);
                                 }
                             }
-                        }          
+                        }
                     }
+                    this.calc_energy();
                 },
-                update: function(){
+                update: function () {
                     var id = setInterval(this.mcmc, 100);
                 },
-                mcmc: function(){
-                        var i = this.randint(0, this.size);
-                        var j = this.randint(0, this.size);
-                        var u = 0;
-                        for (let k = 0; k < this.size; k++) {
-                            for (let l = 0; l < this.size; l++) {
-                                u += this.weight[i][j][k][l] * (this.states[k][l] + 1) / 2;
+                mcmc: function () {
+                    var i = this.randint(0, this.size);
+                    var j = this.randint(0, this.size);
+                    var u = 0;
+                    for (let k = 0; k < this.size; k++) {
+                        for (let l = 0; l < this.size; l++) {
+                            u += this.weight[i][j][k][l] * (this.states[k][l] + 1) / 2;
+                        }
+                    }
+                    if (u >= 0) this.$set(this.states[i], j, 1);
+                    else this.$set(this.states[i], j, -1);
+                    this.calc_energy();
+                    if (!this.loop) clearInterval(id);
+                },
+                randint: function (l, r) {
+                    return Math.floor(Math.random() * (r - l)) + l;
+                },
+                calc_energy: function () {
+                    var res = 0;
+                    for (let i = 0; i < this.size; i++) {
+                        for (let j = 0; j < this.size; j++) {
+                            for (let k = 0; k < this.size; k++) {
+                                for (let l = 0; l < this.size; l++) {
+                                    res += this.weight[i][j][k][l] * this.states[i][j] * this.states[k][l];
+                                }
                             }
                         }
-                        if (u >= 0) this.$set(this.states[i], j, 1);
-                        else this.$set(this.states[i], j, -1);
-                        console.log(i, j, u);
-                        if (!this.loop) clearInterval(id);
-                },
-                randint: function(l, r){
-                    return Math.floor(Math.random() * (r-l)) + l;
+                    }
+                    this.energy = -res / 2;
                 }
             }
         })
