@@ -1,4 +1,8 @@
-# いろいろ
+# がらくた置き場
 
-[量子情報](quantum_information)
+[ホップフィールド模型のシミュレーション](https://masayoshi64.github.io/myblog/hopfield/index.html)
+
+[オセロニア ダメージ計算機](othelonia_calc/main.html)
+
+[時間割アプリ](timetable/index.html)
 
